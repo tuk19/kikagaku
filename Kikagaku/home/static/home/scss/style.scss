@@ -1,5 +1,37 @@
-$primary-text-color: red;
+$primary-area-color: gold;
 
-.top {
-    color: $primary-text-color;
+html {
+    height: 100%;
+}
+
+body {
+    background-color: lightblue;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: $primary-area-color;
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+}
+
+.content {
+    padding: 10px;
+    flex: 1;
+}
+
+.footer {
+    background-color: $primary-area-color;
+    color: black;
+    padding: 5px;
+}
+
+li {
+    list-style: none;
 }
