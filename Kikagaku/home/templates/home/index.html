@@ -1,13 +1,17 @@
+{% extends 'home/layout.html' %}
 {% load static %} 
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'home/css/style.css' %}", type="text/css">
-</head>
-<body>
-    <div class="top">トップページ</div>
-</body>
-</html>
+
+{% block title%}最終課題トップページ{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/index.css' %}", type="text/css">
+{% endblock %}
+
+{% block content%}
+<div class="index_content">
+    <p class="index_content_title">トップページ</p>
+    <div>
+        <p class="index_content_exp">トップページです。下部のリンクから各ページへ移動してください。</p>
+    </div>
+</div>
+{% endblock %}

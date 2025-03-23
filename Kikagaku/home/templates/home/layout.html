@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}最終課題{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}", type="text/css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="header_title">
+            <p>最 終 課 題</p>
+        </div>
+    </header>
+
+    <div class="content">
+        {% block content%}
+        {% endblock %}
+    </div>
+
+    <footer class="footer">
+        <nav class="link_nav">
+            <ul>
+                <li><a href="{% url 'home:index' %}">トップページ</a></li>
+            </ul>
+        </nav>
+    </footer>
+</body>
+</html>
