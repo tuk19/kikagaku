@@ -6,4 +6,22 @@
 <div class="content">
     <p class="content_title">画像分類</p>
 </div>
+<div>
+    <h1>画像アップロード</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">アップロード</button>
+    </form>
+
+    {% if image %}
+        <div>
+            <h1>アップロード画像</h1>
+            <div>
+                {% load custom_filters %}
+                <img src="data:image/jpeg;base64, {{ image.file.read|b64encode }}" alt="Uploaded Image">
+            </div> 
+        </div>
+    {% endif %}
+</div> 
 {% endblock %}
