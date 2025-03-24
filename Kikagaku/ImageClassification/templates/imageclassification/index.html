@@ -8,6 +8,9 @@
 </div>
 <div>
     <h1>画像アップロード</h1>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
@@ -19,7 +22,7 @@
             <h1>アップロード画像</h1>
             <div>
                 {% load custom_filters %}
-                <img src="data:image/jpeg;base64, {{ image.file.read|b64encode }}" alt="Uploaded Image">
+                <img src="data:{{ image_type }};base64, {{ image.file.read|b64encode }}" alt="Uploaded Image">
             </div> 
         </div>
     {% endif %}
