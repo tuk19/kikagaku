@@ -1,9 +1,32 @@
 {% extends 'home/layout.html' %}
 
-{% block title %}画像 文字起こし{% endblock %}
+{% block title %}最終課題 画像文字起こし{% endblock %}
 
 {% block content%}
+<div class="content">
+    <p class="content_title">画像文字起こし</p>
+</div>
 <div>
-    <p class="index_content_title">画像文字起こし</p>
+    <h1>画像アップロード</h1>
+
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">アップロード</button>
+    </form>
+
+    {% if image %}
+        <div> 
+            <h1>アップロード画像</h1>
+            <div>
+                {% load custom_filter %}
+                <img src="data:{{ image_type }};base64, {{ image.file.read|b64encode }}" alt="Uploaded Image">
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
