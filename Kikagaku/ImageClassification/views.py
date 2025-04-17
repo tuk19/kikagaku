@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from .forms import ImageUploadform
+from .predict import predict_image
+from io import BytesIO
+import copy
 
 def index(request):
     if request.method == "POST":
@@ -20,11 +23,23 @@ def index(request):
 
                 return render(request, 'imageclassification/index.html', context)
 
+            image_copy = BytesIO(image.read())
+            image_copy.seek(0)
+            image_for_display = copy.deepcopy(image_copy)
+            image_for_predict = copy.deepcopy(image_copy)
+            
+            result = predict_image(image_for_predict)
+
+            image_for_display.seek(0)
+            image.file = image_for_display
+
             context = {
                 'form': form,
                 'image_type': image_type,
-                'image': image
+                'image': image,
+                'result': result
             }
+
             return render(request, 'imageclassification/index.html', context)
         else:
             form = ImageUploadform()
