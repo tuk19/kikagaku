@@ -21,5 +21,6 @@ from home import views as homeview
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
+    path('imageclassification/', include('ImageClassification.urls')),
     path('imagetranscription/', include('ImageTranscription.urls'))
 ]

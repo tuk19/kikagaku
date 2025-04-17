@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_sass',   # django-sassを有効化
     'home',
+    'ImageClassification',
     'ImageTranscription'
 ]
 

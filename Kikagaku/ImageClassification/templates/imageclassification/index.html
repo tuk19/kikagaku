@@ -1,0 +1,41 @@
+{% extends 'home/layout.html' %}
+{% load static %}
+
+{% block title%}最終課題 画像分類{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'imageclassification/css/index.css' %}", type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <p class="content_title">画像分類</p>
+</div>
+<div>
+    <h1>画像アップロード</h1>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">アップロード</button>
+    </form>
+
+    {% if image %}
+        <div class="image_container">
+            <div>
+                <h1>アップロード画像</h1>
+                <div>
+                    {% load custom_filters %}
+                    <img src="data:{{ image_type }};base64, {{ image.file.read|b64encode }}" alt="Uploaded Image">
+                </div> 
+            </div>
+            <div>
+                <p>この画像は <span class="result"> {{ result1 }} </span> だと思いますが</p>
+                <p><span class="result"> {{ result2 }} </span> の可能性もあります</p>
+            </div>
+        </div>
+    {% endif %}
+</div> 
+{% endblock %}
