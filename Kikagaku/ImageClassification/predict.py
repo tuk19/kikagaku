@@ -32,7 +32,7 @@ ckpt_path = os.path.join(BASE_DIR, 'ImageClassification/best_model_RN18.ckpt')
 model = ResNet18Classifier.load_from_checkpoint(ckpt_path)
 
 def predict_image(image):
-    image = Image.open(image)
+    image = Image.open(image).convert('RGB')
     # バッチサイズ1に合わせてテンソルを変換
     image = transform(image).unsqueeze(0)
     
