@@ -1,6 +1,11 @@
 {% extends 'home/layout.html' %}
+{% load static %}
 
 {% block title%}最終課題 画像分類{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'imageclassification/css/index.css' %}", type="text/css">
+{% endblock %}
 
 {% block content %}
 <div class="content">
@@ -18,15 +23,17 @@
     </form>
 
     {% if image %}
-        <div>
-            <h1>アップロード画像</h1>
+        <div class="image_container">
             <div>
-                {% load custom_filters %}
-                <img src="data:{{ image_type }};base64, {{ image.file.read|b64encode }}" alt="Uploaded Image">
-            </div> 
-        </div>
-        <div>
-            <p>この画像は {{ result }} です</p>
+                <h1>アップロード画像</h1>
+                <div>
+                    {% load custom_filters %}
+                    <img src="data:{{ image_type }};base64, {{ image.file.read|b64encode }}" alt="Uploaded Image">
+                </div> 
+            </div>
+            <div>
+                <p>この画像は <span class="result"> {{ result }} </sapn> です</p>
+            </div>
         </div>
     {% endif %}
 </div> 
