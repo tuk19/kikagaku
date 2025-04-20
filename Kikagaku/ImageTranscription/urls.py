@@ -4,5 +4,6 @@ from ImageTranscription import views
 app_name = 'imagetranscription'
 
 urlpatterns = [
-    path('', views.index, name='index')
+    path('', views.index, name='index'),
+    path('image', views.image, name='image')
 ]

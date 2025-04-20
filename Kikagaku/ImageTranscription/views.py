@@ -4,6 +4,9 @@ from .forms import ImageUploadForm
 # Create your views here.
 
 def index(request):
+    return render(request, ('imagetranscription/index.html'))
+
+def image(request):
     if request.method == "POST":
         context = {}
         form = ImageUploadForm(request.POST, request.FILES)
@@ -16,14 +19,14 @@ def index(request):
                     'form': form,
                     'error_message': 'この画像はアップロードできません。JPEG または PNG 形式の画像のみアップロード可能です',
                 }
-                return render(request, 'imagetranscription/index.html', context)
+                return render(request, 'imagetranscription/image.html', context)
             
             context = {
                 'form': form,
                 'image_type': image_type,
                 'image': image,
             }
-            return render(request, 'imagetranscription/index.html', context)
+            return render(request, 'imagetranscription/image.html', context)
         else:
             form = ImageUploadForm()
             context = {
@@ -35,4 +38,4 @@ def index(request):
         context = {
             'form': form,
         }
-    return render(request, 'imagetranscription/index.html', context)
+    return render(request, 'imagetranscription/image.html', context)
