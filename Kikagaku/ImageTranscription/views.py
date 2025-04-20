@@ -1,5 +1,7 @@
 from django.shortcuts import render
+import numpy as np
 from .forms import ImageUploadForm
+from .easyocr import analyze_picture_bycv2, analyze_picture_bypillow
 
 # Create your views here.
 
@@ -21,10 +23,18 @@ def image(request):
                 }
                 return render(request, 'imagetranscription/image.html', context)
             
+            # file_bytes = np.asarray(bytearray(image.read()), dtype=np.uint8)
+            # image, result_list = analyze_picture_bycv2(file_bytes)
+            
+            image, result_list = analyze_picture_bypillow(image)
+            joined_results = "\n".join(result_list)
+            # print(joined_results)
+
             context = {
                 'form': form,
                 'image_type': image_type,
                 'image': image,
+                'result_text': joined_results,
             }
             return render(request, 'imagetranscription/image.html', context)
         else:

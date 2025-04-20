@@ -23,8 +23,13 @@
         <div> 
             <h1>アップロード画像</h1>
             <div>
-                {% load custom_filter %}
-                <img src="data:{{ image_type }};base64, {{ image.file.read|b64encode }}" alt="Uploaded Image">
+                {% comment %} {% load custom_filter %} {% endcomment %}
+                <img src="data:{{ image_type }};base64,{{ image }}" alt="OCR結果画像">
+                {% if result_text %}
+                    <div>
+                        <textarea name="" id="">{{ result_text }}</textarea>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endif %}
