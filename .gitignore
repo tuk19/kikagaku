@@ -4,5 +4,6 @@ tmp/
 
 Kikagaku/ImageClassification/python/
 Kikagaku/ImageClassification/training_img/
-Kikagaku/ImageClassification/training_img/
 Kikagaku/ImageClassification/best_model_RN18.ckpt
+
+Kikagaku/ImageTranscription/data_image
