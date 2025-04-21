@@ -1,0 +1,12 @@
+.image_container {
+  text-align: center;
+}
+
+.result_textarea {
+  field-sizing: content;
+  min-width: 150px;
+  max-width: 300px;
+  min-height: min-content;
+}
+
+/*# sourceMappingURL=../css/image.css.map */
