@@ -45,7 +45,7 @@ def analyze_picture_bypillow(image):
         p0, p1, p2, p3 = result[0]
         draw.line([*p0, *p1, *p2, *p3, *p0], fill='red', width=3)
         result_list.append(result[1])
-
+        # print(result[1])
     buffer = io.BytesIO()
     image.save(buffer, format="JPEG")
     img_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
