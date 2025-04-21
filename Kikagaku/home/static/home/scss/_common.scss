@@ -1,0 +1,7 @@
+$HilightColor: red;
+$PrimaryAreaColor: gold;
+$BodyColor: lightblue;
+
+@mixin container($align: center) {
+    text-align: $align;
+}

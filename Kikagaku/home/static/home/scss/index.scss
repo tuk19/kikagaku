@@ -1,5 +1,5 @@
-$primary-text-color: red;
+@import 'home/static/home/scss/common';
 
 .index_content_title {
-    color: $primary-text-color;
+    color: $HilightColor;
 }

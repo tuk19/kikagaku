@@ -1,11 +1,11 @@
-$primary-area-color: gold;
+@import 'home/static/home/scss/common';
 
 html {
     height: 100%;
 }
 
 body {
-    background-color: lightblue;
+    background-color: $BodyColor;
     margin: 0;
     height: 100%;
     display: flex;
@@ -13,7 +13,7 @@ body {
 }
 
 .header {
-    background-color: $primary-area-color;
+    background-color: $PrimaryAreaColor;
     font-size: larger;
     font-weight: bold;
     text-align: center;
@@ -27,7 +27,7 @@ body {
 }
 
 .footer {
-    background-color: $primary-area-color;
+    background-color: $PrimaryAreaColor;
     color: black;
     padding: 5px;
 }

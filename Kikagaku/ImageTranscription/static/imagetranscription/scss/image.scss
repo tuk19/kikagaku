@@ -1,5 +1,7 @@
+@import 'home/static/home/scss/common';
+
 .image_container {
-    text-align: center;
+    @include container;
 }
 
 .result_textarea{

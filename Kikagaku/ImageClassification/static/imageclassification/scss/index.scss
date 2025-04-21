@@ -1,10 +1,11 @@
+@import 'home/static/home/scss/common';
 
 .image_container {
-    text-align: center;
+    @include container;
 }
 
 .result {
-    color: red;
+    color: $HilightColor;
     font-size: xx-large;
     font-weight: bolder;
 }
