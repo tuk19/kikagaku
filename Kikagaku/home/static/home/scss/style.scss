@@ -1,11 +1,12 @@
-@import 'home/static/home/scss/common';
+// @import 'home/static/home/scss/common';
+@use 'common' as common;
 
 html {
     height: 100%;
 }
 
 body {
-    background-color: $BodyColor;
+    background-color: common.$BodyColor;
     margin: 0;
     height: 100%;
     display: flex;
@@ -13,7 +14,7 @@ body {
 }
 
 .header {
-    background-color: $PrimaryAreaColor;
+    background-color: common.$PrimaryAreaColor;
     font-size: larger;
     font-weight: bold;
     text-align: center;
@@ -27,7 +28,7 @@ body {
 }
 
 .footer {
-    background-color: $PrimaryAreaColor;
+    background-color: common.$PrimaryAreaColor;
     color: black;
     padding: 5px;
 }

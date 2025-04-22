@@ -1,11 +1,12 @@
-@import 'home/static/home/scss/common';
+// @import 'home/static/home/scss/common';
+@use '../../../../home/static/home/scss/common' as common;
 
 .image_container {
-    @include container;
+    @include common.container;
 }
 
 .result {
-    color: $HilightColor;
+    color: common.$HilightColor;
     font-size: xx-large;
     font-weight: bolder;
 }

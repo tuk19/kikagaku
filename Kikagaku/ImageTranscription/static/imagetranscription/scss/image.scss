@@ -1,7 +1,8 @@
-@import 'home/static/home/scss/common';
+// @use 'home/static/home/scss/common' as common;
+@use '../../../../home/static/home/scss/common' as common;
 
 .image_container {
-    @include container;
+    @include common.container;
 }
 
 .result_textarea{

@@ -1,5 +1,6 @@
-@import 'home/static/home/scss/common';
+// @import 'home/static/home/scss/common';
+@use 'common' as common;
 
 .index_content_title {
-    color: $HilightColor;
+    color: common.$HilightColor;
 }
