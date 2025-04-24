@@ -1,9 +1,12 @@
 import easyocr
 import cv2
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageEnhance
 import numpy as np
 import io
 import base64
+import os
+import uuid
+import tempfile
 
 
 reader = easyocr.Reader(['en', 'ja'])
@@ -32,13 +35,23 @@ def analyze_picture_bycv2(file_bytes, link_threshold=0.3, mag_ratio=1.2):
     return img_str, result_list
 
 
-def analyze_picture_bypillow(image):
-    image = Image.open(io.BytesIO(image.read()))
+def analyze_picture_bypillow(image_file_path):
+    print(f"print1: {image_file_path}")
+    # image = Image.open(io.BytesIO(image.read()))
+    image = Image.open(image_file_path)
     image = image.convert('RGB')
+    image.thumbnail((800, 800))
+    image = ImageEnhance.Brightness(image).enhance(1.2)
+    image = ImageEnhance.Contrast(image).enhance(2)
     draw = ImageDraw.Draw(image)
 
-    image_np = np.array(image)
-    results = reader.readtext(image_np, link_threshold=0.3, mag_ratio=1.2)
+    temp_dir = tempfile.gettempdir()
+    temp_path = os.path.join(temp_dir, f"{uuid.uuid4()}.jpg")
+    # image_np = np.array(image)
+    image.save(temp_path, format="JPEG")
+    print(f"print2: {temp_path}")
+    results = reader.readtext(temp_path, link_threshold=0.3, mag_ratio=1.2, detail=1)
+    print(f"print3: {results}")
     result_list = []
 
     for result in results:
@@ -49,5 +62,7 @@ def analyze_picture_bypillow(image):
     buffer = io.BytesIO()
     image.save(buffer, format="JPEG")
     img_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    os.remove(temp_path)
 
     return img_str, result_list

@@ -25,8 +25,9 @@ def image(request):
             
             # file_bytes = np.asarray(bytearray(image.read()), dtype=np.uint8)
             # image, result_list = analyze_picture_bycv2(file_bytes)
-            
-            image, result_list = analyze_picture_bypillow(image)
+            uploaded = form.save()
+
+            image, result_list = analyze_picture_bypillow(uploaded.image.file)
             joined_results = "\n".join(result_list)
             # print(joined_results)
 
@@ -36,6 +37,7 @@ def image(request):
                 'image': image,
                 'result_text': joined_results,
             }
+            uploaded.delete()
             return render(request, 'imagetranscription/image.html', context)
         else:
             form = ImageUploadForm()

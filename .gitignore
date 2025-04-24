@@ -1,6 +1,8 @@
 tmp/
-
+media/
 **/__pycache__/
+
+db.sqlite3
 
 Kikagaku/ImageClassification/python/
 Kikagaku/ImageClassification/training_img/
