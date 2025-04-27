@@ -5,5 +5,6 @@ app_name = 'imagetranscription'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('image', views.image, name='image')
+    path('image', views.image, name='image'),
+    path('url', views.pdf, name='pdf')
 ]

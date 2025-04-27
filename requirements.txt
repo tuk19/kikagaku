@@ -11,3 +11,4 @@ pillow==11.1.0
 opencv-python-headless==4.11.0.86  # GUIが不要ならheadless推奨
 torchmetrics
 easyocr==1.7.2
+pymupdf==1.25.5

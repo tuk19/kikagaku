@@ -1,0 +1,31 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}最終課題 画像文字起こし{% endblock %}
+
+{% block content%}
+<div class="content">
+    <p class="content_title">画像文字起こし</p>
+</div>
+
+<div>
+    <h1>PDFアップロード</h1>
+
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+
+    {% if form.errors %}
+        {% for fields, errors in form.errors.item %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">PDFアップロード</button>
+    </form>
+</div>
+
+{% include 'imagetranscription/link_nav.html' %}
+{% endblock %}
