@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_sass',   # django-sassを有効化
     'home',
     'ImageClassification',
+    'PoseAnalysis',
 ]
 
 MIDDLEWARE = [

@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('imageclassification/', include('ImageClassification.urls')),
+    path('poseanalysis/', include('PoseAnalysis.urls')),
 ]
