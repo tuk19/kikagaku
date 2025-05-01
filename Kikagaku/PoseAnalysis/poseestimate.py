@@ -1,10 +1,10 @@
 import cv2
 from ultralytics import YOLO
 
-def estimate_pose(input_path, output_path):
+def estimate_pose(input_path, output_path, fps_rate):
     model = YOLO('yolov8n-pose.pt')
     cap = cv2.VideoCapture(input_path)
-    fps = cap.get(cv2.CAP_PROP_FPS)
+    fps = cap.get(cv2.CAP_PROP_FPS) * fps_rate
     w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 

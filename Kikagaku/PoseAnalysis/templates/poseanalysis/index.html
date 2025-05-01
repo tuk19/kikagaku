@@ -8,13 +8,19 @@
 </div>
 
 <h1>動画アップロード</h1>
+<div>
+    <p>動画をアップロードすると、姿勢推定してダウンロードします</p>
+</div>
 {% if error_message %}
     <p>{{ error_message|linebreaksbr }}</p>
 {% endif %}
-
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">アップロード</button>
-</form>
+<div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="fps_rate">動画の速度倍率を設定します</label>
+        <input type="text", name="fps_rate", value=1 />
+        {{ form.as_p }}
+        <button type="submit">姿勢推定してダウンロード</button>
+    </form>
+</div>
 {% endblock %}
