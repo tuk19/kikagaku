@@ -1,5 +1,7 @@
 {% extends 'home/layout.html' %}
 
+{% load static %}
+
 {% block title %}最終課題 動画姿勢解析{% endblock %}
 
 {% block content %}
@@ -12,15 +14,23 @@
     <p>動画をアップロードすると、姿勢推定してダウンロードします</p>
 </div>
 {% if error_message %}
-    <p>{{ error_message|linebreaksbr }}</p>
+    <p id="error_message">{{ error_message|linebreaksbr }}</p>
 {% endif %}
 <div>
-    <form method="POST" enctype="multipart/form-data">
+    <p id="loading_message" style="display: none;">姿勢推定を行なっています。しばらくお待ちください</p>
+</div>
+<div>
+    <form id="poseForm" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="fps_rate">動画の速度倍率を設定します</label>
-        <input type="text", name="fps_rate", value=1 />
+        <input type="text" name="fps_rate" value=1 id="fps_rate" />
         {{ form.as_p }}
-        <button type="submit">姿勢推定してダウンロード</button>
+        <button type="submit" onclick="showLoading()">姿勢推定してダウンロード</button>
     </form>
 </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'poseanalysis/js/index.js' %}"></script>
 {% endblock %}
