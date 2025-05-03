@@ -1,5 +1,6 @@
 tmp/
 media/
+data/
 **/__pycache__/
 
 Kikagaku/db.sqlite3
@@ -8,4 +9,4 @@ Kikagaku/ImageClassification/python/
 Kikagaku/ImageClassification/training_img/
 Kikagaku/ImageClassification/best_model_RN18.ckpt
 
-Kikagaku/ImageTranscription/data/
+yolov8n-pose.pt

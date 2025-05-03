@@ -1,0 +1,75 @@
+from django.shortcuts import render
+from django.conf import settings
+from django.http import FileResponse
+from .forms import VideoUploadForm
+from .poseestimate import estimate_pose
+import os
+import uuid
+
+def index(request):
+    if request.method == 'POST':
+        error_state = False
+        form = VideoUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            video_file = request.FILES['video_file']
+            fps_rate = request.POST['fps_rate']
+            try:
+                float(fps_rate)
+                if float(fps_rate) < 0.5 or float(fps_rate) > 2:
+                    error_message = '速度倍率は0.5〜2の範囲で設定してください。'
+                    error_state = True
+            except ValueError:
+                error_message = '速度倍率は数値で設定してください。'
+                error_state = True
+            else:
+                fps_rate = float(fps_rate)
+
+            if error_state:
+                context = {
+                    'form': form,
+                    'error_message': error_message,
+                }
+                return render(request, 'poseanalysis/index.html', context)
+
+            valid_extensions = ['.mp4', '.mov', '.avi', '.mkv']
+            ext = os.path.splitext(video_file.name)[1].lower()
+            if ext not in valid_extensions:
+                error_message = '動画ファイルをアップロードしてください \n mp4, mov, avi, mkv ファイルが使用できます'
+                context = {
+                    'form': form,
+                    'error_message': error_message,
+                }
+                return render(request, 'poseanalysis/index.html', context)
+
+            video_filename = os.path.splitext(video_file.name)[0]
+            input_filename = f"{uuid.uuid4()}.mp4"
+            input_path = os.path.join(settings.MEDIA_ROOT, input_filename)
+
+            with open(input_path, 'wb+') as f:
+                for chunk in video_file.chunks():
+                    f.write(chunk)
+
+            output_filename = f'movies/processed_{input_filename}'
+            output_path = os.path.join(settings.MEDIA_ROOT, output_filename)
+
+            estimate_pose(input_path, output_path, fps_rate)
+            os.remove(input_path)
+            filename = f'{video_filename}_{fps_rate}fps.mp4'
+
+            response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=filename)
+
+            def cleanup(file_path):
+                try:
+                    os.remove(file_path)
+                except Exception as e:
+                    print(f'削除失敗: {e}')
+
+            response.close = lambda *args, **kwargs: (cleanup(output_path), FileResponse.close(response, *args, **kwargs))
+            return response
+
+    else:
+        form = VideoUploadForm()
+        context = {
+            'form': form,
+        }
+    return render(request, 'poseanalysis/index.html', context)

@@ -8,7 +8,8 @@ torch==2.6.0  # or torch==2.6.0+cpu
 pytorch-lightning==2.5.1
 torchvision==0.21.0
 pillow==11.1.0
-opencv-python-headless==4.11.0.86  # GUIが不要ならheadless推奨
+# opencv-python-headless==4.11.0.86  # GUIが不要ならheadless推奨
 torchmetrics
 easyocr==1.7.2
 pymupdf==1.25.5
+ultralytics==8.3.122
