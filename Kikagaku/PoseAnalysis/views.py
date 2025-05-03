@@ -49,13 +49,23 @@ def index(request):
                 for chunk in video_file.chunks():
                     f.write(chunk)
 
-            output_filename = f'processed_{input_filename}'
+            output_filename = f'movies/processed_{input_filename}'
             output_path = os.path.join(settings.MEDIA_ROOT, output_filename)
 
             estimate_pose(input_path, output_path, fps_rate)
             os.remove(input_path)
             filename = f'{video_filename}_{fps_rate}fps.mp4'
-            return FileResponse(open(output_path, 'rb'), as_attachment=True, filename=filename)
+
+            response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=filename)
+
+            def cleanup(file_path):
+                try:
+                    os.remove(file_path)
+                except Exception as e:
+                    print(f'削除失敗: {e}')
+
+            response.close = lambda *args, **kwargs: (cleanup(output_path), FileResponse.close(response, *args, **kwargs))
+            return response
 
     else:
         form = VideoUploadForm()
