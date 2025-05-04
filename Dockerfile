@@ -1,9 +1,16 @@
 FROM python:3.11
 ENV PYTHONUNBUFFERED 1
-RUN apt-get update && apt-get install -y libgl1-mesa-dev \
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-dev \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 \
+    libjpeg-dev \
+    libpng-dev \
     curl \
     libc6 \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/*
 ENV SASS_VERSION=1.86.3
 RUN curl -L https://github.com/sass/dart-sass/releases/download/${SASS_VERSION}/dart-sass-${SASS_VERSION}-linux-arm64.tar.gz -o /tmp/sass.tar.gz && \
     mkdir -p /opt/dart-sass && \
