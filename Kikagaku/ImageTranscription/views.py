@@ -1,8 +1,8 @@
 from django.shortcuts import render
 import numpy as np
 from .forms import ImageUploadForm, PDFUploadForm
-from .easyocr import analyze_picture_bycv2, analyze_picture_bypillow
-from .processpdf import discern_pdf
+from .myocr import analyze_picture_bycv2, analyze_picture_bypillow
+from .processpdf import discern_pdf, pdfocr
 
 # Create your views here.
 
@@ -62,10 +62,11 @@ def pdf(request):
         if form.is_valid():
             pdf = request.FILES['pdf']
             uploaded = form.save()
-            discern = discern_pdf(uploaded.pdf.file)
+            # discern = discern_pdf(uploaded.pdf.file)
+            pdfocr(uploaded.pdf.path, 2)
             context = {
                 'form': form,
-                'error_message': discern
+                # 'error_message': discern
             }
             uploaded.delete()
             return render(request, 'imagetranscription/pdf.html', context)

@@ -1,4 +1,10 @@
+import easyocr
 import fitz
+import numpy as np
+import io
+from PIL import Image, ImageDraw
+
+
 
 def discern_pdf(pdf_path):
     discern = ""
@@ -11,6 +17,25 @@ def discern_pdf(pdf_path):
         discern = '画像型 PDF'
     return discern
     
+
+def pdfocr(pdf_path, page_number):
+    doc = fitz.open(pdf_path)
+    page = doc.load_page(page_number)
+
+    pix = page.get_pixmap(dpi=300)
+    image = Image.open(io.BytesIO(pix.tobytes("png")))
+    draw = ImageDraw.Draw(image)
+
+    reader = easyocr.Reader(['ja', 'en'])
+    results = reader.readtext(np.array(image))
+
+    for result in results:
+        p0, p1, p2, p3 = result[0]
+        draw.line([*p0, *p1, *p2, *p3, *p0], fill='red', width=3)
+        print(result[1])
+
+    save_path = '/content/PDF1.jpg'
+    image.save(save_path)
 
 # import fitz
 # import easyocr
