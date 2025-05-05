@@ -1,0 +1,5 @@
+@use '../../../../home/static/home/scss/common' as common;
+
+#error_message {
+    color: common.$HilightColor;
+}
