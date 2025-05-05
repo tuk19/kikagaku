@@ -10,3 +10,4 @@ Kikagaku/ImageClassification/training_img/
 Kikagaku/ImageClassification/best_model_RN18.ckpt
 
 yolov8n-pose.pt
+dog_100epochs_best.pt
