@@ -1,0 +1,6 @@
+@use '../../../../home/static/home/scss/common' as common;
+
+.image_container {
+    @include common.container;
+}
+

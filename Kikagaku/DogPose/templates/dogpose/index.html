@@ -1,9 +1,38 @@
 {% extends 'home/layout.html' %}
+{% load static %}
 
 {% block title %}犬の姿勢推定{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dogpose/css/index.css' %}", type="text/css">
+{% endblock %}
 {% block content %}
 <div>
     <p>犬の姿勢推定</p>
 </div>
+
+<div>
+    <h1>画像アップロード</h1>
+    {% if error_message %}
+        <p id='error_message'>{{ error_message }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">姿勢推定する</button>
+    </form>
+
+    {% if image %}
+        <div class="image_container">
+            <div>
+                <h1>姿勢推定画像</h1>
+                <div>
+                    {% load custom_filters %}
+                    <img src="data:{{ image_type }};base64, {{ image }}" alt="estimate image">
+                </div> 
+            </div>
+        </div>
+    {% endif %}
+</div> 
 {% endblock %}
