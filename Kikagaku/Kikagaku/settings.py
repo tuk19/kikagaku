@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'ImageClassification',
     'ImageTranscription',
     'PoseAnalysis',
+    'DogPose',
 ]
 
 MIDDLEWARE = [
