@@ -14,7 +14,7 @@
 <div>
     <h1>画像アップロード</h1>
     {% if error_message %}
-        <p>{{ error_message }}</p>
+        <p id="error_message">{{ error_message }}</p>
     {% endif %}
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
