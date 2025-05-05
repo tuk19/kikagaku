@@ -30,7 +30,7 @@ def index(request):
 
             base64_img = dog_image_estimate(temp_path)
             os.remove(temp_path)
-            print(base64_img)
+
             context = {
                 'form': form,
                 'error_message': None,
