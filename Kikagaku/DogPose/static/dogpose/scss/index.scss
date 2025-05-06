@@ -4,3 +4,13 @@
     @include common.container;
 }
 
+.skeleton_table {
+    border-collapse: collapse;
+    margin: 0 auto;
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px 12px;
+    }
+}
+

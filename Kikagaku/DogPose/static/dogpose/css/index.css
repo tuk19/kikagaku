@@ -2,4 +2,13 @@
   text-align: center;
 }
 
+.skeleton_table {
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+.skeleton_table th, .skeleton_table td {
+  border: 1px solid black;
+  padding: 8px 12px;
+}
+
 /*# sourceMappingURL=index.css.map */
