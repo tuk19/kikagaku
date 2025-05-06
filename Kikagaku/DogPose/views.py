@@ -2,9 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from .forms import ImageUploadForm
 from .dogposeestimate import dog_image_estimate
-from io import BytesIO
 import os
-import copy
 
 def index(request):
     if request.method == "POST":
