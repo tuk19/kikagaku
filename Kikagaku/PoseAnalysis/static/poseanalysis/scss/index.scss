@@ -3,3 +3,12 @@
 #error_message {
     color: common.$HilightColor;
 }
+
+.image_container {
+    @include common.container;
+    width: 800px
+}
+
+.download_btn {
+    @include common.download_link;
+}

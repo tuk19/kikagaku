@@ -2,4 +2,19 @@
   color: red;
 }
 
+.image_container {
+  text-align: center;
+  width: 800px;
+}
+
+.download_btn {
+  display: block;
+  text-decoration: none;
+  color: black;
+  background-color: lightsalmon;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 20px;
+}
+
 /*# sourceMappingURL=index.css.map */

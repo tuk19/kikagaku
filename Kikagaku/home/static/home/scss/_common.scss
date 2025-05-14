@@ -1,7 +1,18 @@
 $HilightColor: red;
 $PrimaryAreaColor: gold;
 $BodyColor: lightblue;
+$DownloadColor: lightsalmon;
 
 @mixin container($align: center) {
     text-align: $align;
+}
+
+@mixin download_link($decolarion: none, $color: black, $background-color: $DownloadColor) {
+    display: block;
+    text-decoration: none;
+    color: $color;
+    background-color: $background-color;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 20px;
 }
