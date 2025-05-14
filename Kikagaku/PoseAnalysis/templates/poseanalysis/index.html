@@ -39,7 +39,7 @@
             <video src="{{ video_url }}" controls muted autoplay playinline loop type="video/mp4" width="800"></video>
         </div>
         <div>
-            <a href="" class="download_btn">動画をダウンロード</a>
+            <a class="download_btn" href="{% url 'poseanalysis:download_video' output_filename %}?name={{ download_filename }}" >動画をダウンロード</a>
         </div>
     </div>
 {% endif %}

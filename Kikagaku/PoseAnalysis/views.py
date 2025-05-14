@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.conf import settings
-from django.http import FileResponse
+from django.http import FileResponse, Http404
 from .forms import VideoUploadForm
 from .poseestimate import estimate_pose, convert_to_h264
 import os
@@ -49,7 +49,8 @@ def index(request):
                 for chunk in video_file.chunks():
                     f.write(chunk)
 
-            output_filename = f'movies/processed_{input_filename}'
+            process_filename = f'processed_{input_filename}'
+            output_filename = f'movies/{process_filename }'
             output_path = os.path.join(settings.MEDIA_ROOT, output_filename)
 
             temp_filename = f'movies/temp_processed_{input_filename}'
@@ -68,20 +69,11 @@ def index(request):
                 'form': form,
                 'error_message': None,
                 'video_url': video_url,
+                'output_filename': process_filename,
                 'download_filename': filename,
             }
 
             return render(request, 'poseanalysis/index.html', context)
-            # response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=filename)
-
-            # def cleanup(file_path):
-            #     try:
-            #         os.remove(file_path)
-            #     except Exception as e:
-            #         print(f'削除失敗: {e}')
-
-            # response.close = lambda *args, **kwargs: (cleanup(output_path), FileResponse.close(response, *args, **kwargs))
-            # return response
 
     else:
         form = VideoUploadForm()
@@ -89,3 +81,13 @@ def index(request):
             'form': form,
         }
     return render(request, 'poseanalysis/index.html', context)
+
+def download_video(request, filename):
+    output_filename = f'movies/{filename}'
+    output_path = os.path.join(settings.MEDIA_ROOT, output_filename)
+    if not os.path.exists(output_path):
+        raise Http404("ファイルが存在しません")
+    
+    download_filename = os.path.basename(request.GET.get('name', filename))
+    response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=download_filename)
+    return response
