@@ -43,6 +43,16 @@
         </div>
     </div>
 {% endif %}
+
+{% if image %}
+    <h3>姿勢推定結果</h3>
+    <div class="image_container">
+        <div>
+            {% load custom_filters %}
+            <img src="data:{{ image_type }};base64, {{ image }}" alt="estimate image">
+        </div> 
+    </div>
+{% endif %}
 {% endblock %}
 
 {% block javascript %}

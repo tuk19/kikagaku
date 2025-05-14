@@ -1,4 +1,7 @@
+import io 
+import base64
 import cv2
+import matplotlib.pyplot as plt
 from ultralytics import YOLO
 
 import subprocess
@@ -10,7 +13,7 @@ def convert_to_h264(input_path, output_path):
     ])
 
 
-def estimate_pose(input_path, output_path, fps_rate):
+def estimate_video_pose(input_path, output_path, fps_rate):
     model = YOLO('yolov8n-pose.pt')
     cap = cv2.VideoCapture(input_path)
     fps = cap.get(cv2.CAP_PROP_FPS) * fps_rate
@@ -31,3 +34,22 @@ def estimate_pose(input_path, output_path, fps_rate):
 
     cap.release()
     out.release()
+
+def estimate_image_pose(input_path):
+    model = YOLO('yolov8n-pose.pt')
+    results = model(input_path)
+    img = results[0].plot()
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    plt.imshow(img_rgb)
+
+    plt.axis('off')
+
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format="jpg", bbox_inches='tight')
+    buffer.seek(0)
+    image_jpg = buffer.getvalue()
+    buffer.close()
+    plt.close()
+
+    base64_img = base64.b64encode(image_jpg).decode('utf-8')
+    return base64_img
