@@ -12,9 +12,9 @@
     <p class="content_title">動画姿勢解析</p>
 </div>
 
-<h1>動画アップロード</h1>
+<h1>ファイルアップロード</h1>
 <div>
-    <p>動画をアップロードすると、姿勢推定してダウンロードします</p>
+    <p>画像か動画をアップロードすると、姿勢推定します</p>
 </div>
 {% if error_message %}
     <p id="error_message">{{ error_message|linebreaksbr }}</p>
@@ -25,13 +25,24 @@
 <div>
     <form id="poseForm" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="fps_rate">動画の速度倍率を設定します</label>
+        <label for="fps_rate">動画の速度倍率を設定します (0.5 〜 2)</label>
         <input type="text" name="fps_rate" value=1 id="fps_rate" />
         {{ form.as_p }}
-        <button type="submit" onclick="showLoading()">姿勢推定してダウンロード</button>
+        <button type="submit" onclick="showLoading()">姿勢推定する</button>
     </form>
 </div>
 
+{% if video_url %}
+    <h3>姿勢推定結果</h3>
+    <div class="image_contaienr">
+        <div>
+            <video src="{{ video_url }}" controls muted autoplay playinline loop type="video/mp4" width="800"></video>
+        </div>
+        <div>
+            <a href="" class="download_btn">動画をダウンロード</a>
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
 
 {% block javascript %}

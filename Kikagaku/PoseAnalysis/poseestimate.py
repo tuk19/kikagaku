@@ -1,6 +1,15 @@
 import cv2
 from ultralytics import YOLO
 
+import subprocess
+
+def convert_to_h264(input_path, output_path):
+    subprocess.run([
+        'ffmpeg', '-y', '-i', input_path,
+        '-vcodec', 'libx264', '-acodec', 'aac', output_path
+    ])
+
+
 def estimate_pose(input_path, output_path, fps_rate):
     model = YOLO('yolov8n-pose.pt')
     cap = cv2.VideoCapture(input_path)

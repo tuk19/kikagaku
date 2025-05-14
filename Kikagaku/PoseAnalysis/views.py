@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import FileResponse
 from .forms import VideoUploadForm
-from .poseestimate import estimate_pose
+from .poseestimate import estimate_pose, convert_to_h264
 import os
 import uuid
 
@@ -52,20 +52,36 @@ def index(request):
             output_filename = f'movies/processed_{input_filename}'
             output_path = os.path.join(settings.MEDIA_ROOT, output_filename)
 
-            estimate_pose(input_path, output_path, fps_rate)
+            temp_filename = f'movies/temp_processed_{input_filename}'
+            temp_path = os.path.join(settings.MEDIA_ROOT, temp_filename)
+
+            estimate_pose(input_path, temp_path, fps_rate)
+            convert_to_h264(temp_path, output_path)
+
             os.remove(input_path)
+            os.remove(temp_path)
+
             filename = f'{video_filename}_{fps_rate}fps.mp4'
+            video_url = settings.MEDIA_URL + output_filename
+            
+            context = {
+                'form': form,
+                'error_message': None,
+                'video_url': video_url,
+                'download_filename': filename,
+            }
 
-            response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=filename)
+            return render(request, 'poseanalysis/index.html', context)
+            # response = FileResponse(open(output_path, 'rb'), as_attachment=True, filename=filename)
 
-            def cleanup(file_path):
-                try:
-                    os.remove(file_path)
-                except Exception as e:
-                    print(f'削除失敗: {e}')
+            # def cleanup(file_path):
+            #     try:
+            #         os.remove(file_path)
+            #     except Exception as e:
+            #         print(f'削除失敗: {e}')
 
-            response.close = lambda *args, **kwargs: (cleanup(output_path), FileResponse.close(response, *args, **kwargs))
-            return response
+            # response.close = lambda *args, **kwargs: (cleanup(output_path), FileResponse.close(response, *args, **kwargs))
+            # return response
 
     else:
         form = VideoUploadForm()

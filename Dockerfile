@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     curl \
     libc6 \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 ENV SASS_VERSION=1.86.3
 RUN curl -L https://github.com/sass/dart-sass/releases/download/${SASS_VERSION}/dart-sass-${SASS_VERSION}-linux-arm64.tar.gz -o /tmp/sass.tar.gz && \
