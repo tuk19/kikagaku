@@ -92,11 +92,11 @@ def pdf(request):
                         'form': form,
                         'error_message': error_message,
                     }
-                    
+
                     return render(request, 'imagetranscription/pdf.html', context)
-                
+
                 page_number -= 1
-                
+
                 output_filename = f"page{page_number}.jpg"
                 output_path = os.path.join(settings.MEDIA_ROOT, 'pdfs', output_filename)
                 text, image_path = pdf_to_text(doc, output_path, page_number)
