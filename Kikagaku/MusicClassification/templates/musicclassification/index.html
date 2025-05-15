@@ -19,12 +19,16 @@
         <button type="">アップロード</button>
     </form>
 
-    {% if music %}
+    {% if audio_url %}
         <div>
             <div>
                 <p>アップロードファイル</p>
             </div>
-            <p>この音楽は {{ pred }}% 確率で {{ class }} の音楽と思われます</p>
+            <div>
+                <audio src="{{ audio_url }}" controls></audio>
+                <p>この音楽 {{ audio_name }} は </p>
+                <p>{{ pred }}% 確率で {{ class }} の音楽と思われます</p>
+            </div>
         </div>
     {% endif %}
 </div>

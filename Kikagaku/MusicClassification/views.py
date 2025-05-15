@@ -11,8 +11,9 @@ def index(request):
         form = MusicUploadForm(request.POST, request.FILES)
         if form.is_valid():
             music = form.cleaned_data['music']
+            music_filename = os.path.splitext(music.name)[0]
             input_filename = f"{uuid.uuid4()}.wav"
-            input_path = os.path.join(settings.MEDIA_ROOT, input_filename)
+            input_path = os.path.join(settings.MEDIA_ROOT, 'audio', input_filename)
 
             with open(input_path, 'wb+') as destination:
                 for chunk in music.chunks():
@@ -20,9 +21,12 @@ def index(request):
 
             pred, pred_class = predict_music(input_path)
 
+            audio_url = os.path.join(settings.MEDIA_URL, 'audio', input_filename)
+
             context = {
                 'form': form,
-                'music': music,
+                'audio_url': audio_url,
+                'audio_name': music_filename,
                 'pred': pred,
                 'class': pred_class,
             }
