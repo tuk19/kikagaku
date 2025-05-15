@@ -1,6 +1,11 @@
 {% extends 'home/layout.html' %}
+{% load static %}
 
 {% block title %}最終課題 画像文字起こし{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'imagetranscription/css/pdf.css' %}", type="text/css">
+{% endblock %}
 
 {% block content%}
 <div class="content">
@@ -22,9 +27,24 @@
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <label for="page_number">ページ番号を指定します</label>
+        <input type="text" name="page_number" value=1 id="page_number" />
         {{ form.as_p }}
         <button type="submit">PDFアップロード</button>
     </form>
+
+    <div class="image_container">
+        {% if image_url %}
+            <div class="image_container">
+                <img class="pdf_image" src="{{ image_url }}" alt="OCR結果画像">
+            </div>
+        {% endif %}
+        {% if result_text %}
+            <div>
+                <textarea class="result_textarea">{{ result_text }}</textarea>
+            </div>
+        {% endif %}
+    </div>
 </div>
 
 {% include 'imagetranscription/link_nav.html' %}

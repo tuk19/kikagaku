@@ -12,9 +12,11 @@ def discern_pdf(pdf_path):
     page = doc.load_page(0)
     text = page.get_text()
     if text.strip():
-        discern = 'テキスト埋め込み型 PDF'
+        # 'テキスト埋め込み型 PDF'
+        discern = "text"
     else:
-        discern = '画像型 PDF'
+        # '画像型 PDF'
+        discern = "image"
     return discern
     
 
@@ -36,6 +38,15 @@ def pdfocr(pdf_path, page_number):
 
     save_path = '/content/PDF1.jpg'
     image.save(save_path)
+
+def pdf_to_text(doc, image_output_path, page_number=0):
+    text = ""
+    page = doc[page_number]  
+    text = page.get_text()
+    pix = page.get_pixmap(dpi=200)
+    pix.save(image_output_path)
+    return text, image_output_path
+
 
 # import fitz
 # import easyocr
