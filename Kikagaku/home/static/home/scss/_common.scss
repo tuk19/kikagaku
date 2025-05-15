@@ -16,3 +16,10 @@ $DownloadColor: lightsalmon;
     margin: 10px 0;
     border-radius: 20px;
 }
+
+@mixin result_textarea{
+    field-sizing: content;
+    min-width: 150px;
+    max-width: 100%;
+    min-height: min-content;
+}

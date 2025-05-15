@@ -5,6 +5,11 @@
     @include common.container;
 }
 
+.pdf_image {
+    max-width: 100%;
+}
+
 .result_textarea{
     @include common.result_textarea
 }
+
