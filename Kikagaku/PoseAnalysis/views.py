@@ -59,7 +59,7 @@ def index(request):
                         f.write(chunk)
 
                 process_filename = f'processed_{input_filename}'
-                output_filename = f'movies/{process_filename }'
+                output_filename = f'movies/{process_filename}'
                 output_path = os.path.join(settings.MEDIA_ROOT, output_filename)
 
                 temp_filename = f'movies/temp_processed_{input_filename}'
