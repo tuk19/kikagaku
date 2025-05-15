@@ -8,6 +8,24 @@
 </div>
 <div>
     <h1>楽曲アップロード</h1>
-    
+    {% if error_message %}
+        <p id="error_message">{{ error_message }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>MP3、WAV、M4Aいずれかのファイルをアップロードしてください</p>
+        {{ form.as_p }}
+        <button type="">アップロード</button>
+    </form>
+
+    {% if music %}
+        <div>
+            <div>
+                <p>アップロードファイル</p>
+            </div>
+        </div>
+    {% endif %}
 </div>
+
 {% endblock %}
