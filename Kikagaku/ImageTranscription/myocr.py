@@ -9,8 +9,8 @@ import uuid
 import tempfile
 
 
-# reader = easyocr.Reader(['en', 'ja'], verbose=True)
-reader = easyocr.Reader(['en'], verbose=True)
+reader = easyocr.Reader(['en', 'ja'], verbose=True)
+# reader = easyocr.Reader(['en'], verbose=True)
 
 
 def analyze_picture_bycv2(file_bytes, link_threshold=0.3, mag_ratio=1.2):
