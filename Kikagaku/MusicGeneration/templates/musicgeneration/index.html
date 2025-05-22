@@ -1,11 +1,38 @@
 {% extends 'home/layout.html' %}
+{% load static %}
 
 {% block title %}楽曲生成{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'musicgeneration/css/index.css' %}" type="text/css">
+{% endblock %}
 
 {% block content %}
 <div>
     <p>楽曲生成<p>
+    <p>生成される楽曲は毎回異なります。</p>
+    <p>生成に５〜１０分ほどかかります。ご注意ください</p>
 </div>
+<div>
+    <p class="generate_message">楽曲生成中です...しばらくお待ちください...</p>
+</div>
+<div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" onclick="click_generate()">楽曲生成する</button>
+    </form>
+</div>
+
+{% if message %}
+    <div>
+        {{ message }}
+    </div>
+    <div>
+        <audio src="{{ wav_url }}" controls></audio>
+    </div>
+{% endif %}
 {% endblock %}
 
-/Users/wakhome/Desktop/キカガク/FinalTask/Kikagaku/MusicGeneration
+{% block javascript %}
+    <script src="{% static 'musicgeneration/js/index.js' %}"></script>
+{% endblock %}
