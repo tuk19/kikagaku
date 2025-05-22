@@ -12,3 +12,5 @@ Kikagaku/ImageClassification/best_model_RN18.ckpt
 yolov8n-pose.pt
 dog_100epochs_best.pt
 best_musicmodel_RN18.ckpt
+best_MusicGenerateModel_3.ckpt
+tokenizer_3.json
