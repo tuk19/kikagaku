@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y \
     libxext6 \
     libjpeg-dev \
     libpng-dev \
+    fonts-noto-cjk \
+    fonts-ipafont-gothic \
+    fonts-ipafont-mincho \
     curl \
     libc6 \
     ffmpeg \
