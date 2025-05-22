@@ -14,3 +14,5 @@ torchaudio==2.6.0
 easyocr==1.7.2
 pymupdf==1.25.5
 ultralytics==8.3.122
+miditok==3.0.5.post1
+pretty_midi==0.2.10
