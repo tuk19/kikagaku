@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'PoseAnalysis',
     'DogPose',
     'MusicClassification',
+    'MusicGeneration',
 ]
 
 MIDDLEWARE = [
