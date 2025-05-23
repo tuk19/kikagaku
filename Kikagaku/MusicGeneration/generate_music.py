@@ -3,8 +3,11 @@ from miditok import REMI
 import pretty_midi
 from scipy.io.wavfile import write
 import numpy as np
+import matplotlib.pyplot as plt
 from .generate_model import MusicGenerator
 from Kikagaku.settings import BASE_DIR
+from io import BytesIO
+import base64
 import os
 
 def load_model():
@@ -49,3 +52,34 @@ def midi_to_audio(midi_path, wav_path, rate=44100):
     audio_data = midi_data.synthesize()
     audio_int16 = np.int16(audio_data / np.max(np.abs(audio_data)) * 32767)
     write(wav_path, rate, audio_int16)
+
+def midi_to_image(midi_path):
+    midi_data = pretty_midi.PrettyMIDI(midi_path)
+    fig, ax = plt.subplots(figsize=(14, 6))
+    colors = plt.cm.get_cmap('tab20', len(midi_data.instruments))
+    for i, instrument in enumerate(midi_data.instruments):
+        for note in instrument.notes:
+            ax.plot([note.start, note.end], [note.pitch, note.pitch], linewidth=5, color=colors(i), label=instrument.name if i == 0 else "")
+
+    ax.set_xlabel('Time (s)')
+    ax.set_ylabel('MIDI Pitch')
+    ax.set_title('Colored Piano Roll by Instrument')
+    ax.grid(True)
+
+    # 凡例表示 必要ならアンコメント
+    # handles = []
+    # labels = []
+    # for i, instrument in enumerate(midi_data.instruments):
+    #     handles.append(plt.Line2D([0], [0], color=colors(i), lw=5))
+    #     labels.append(instrument.name if instrument.name else f'Instrument {i+1}')
+
+    plt.tight_layout()
+
+    buf = BytesIO()
+    format = 'jpg'
+    plt.savefig(buf, format=format)
+    plt.close(fig)
+    buf.seek(0)
+
+    image_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    return image_base64, format

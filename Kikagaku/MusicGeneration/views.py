@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from django.conf import settings
-from .generate_music import load_model, generate_tokens, decode_tokens_to_midi, midi_to_audio
+from .generate_music import (
+    load_model,
+    generate_tokens,
+    decode_tokens_to_midi,
+    midi_to_audio,
+    midi_to_image
+)
 import uuid
 import os
 
@@ -16,12 +22,16 @@ def index(request):
         tokens = generate_tokens(model, max_length=2048)
         decode_tokens_to_midi(tokens, midi_path)
         midi_to_audio(midi_path, wav_path)
-        os.remove(midi_path)
+        image_base64, format = midi_to_image(midi_path)
+        # midiファイルを保存するためコメントアウト
+        # os.remove(midi_path)
 
         message = "楽曲生成しました"
         context = {
             'message': message,
             'wav_url': wav_url,
+            'image': image_base64,
+            'format': format,
         }
         return render(request, 'musicgeneration/index.html', context)
     else:

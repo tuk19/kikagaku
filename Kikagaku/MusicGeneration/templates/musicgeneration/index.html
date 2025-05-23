@@ -19,16 +19,24 @@
 <div>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <button type="submit" onclick="click_generate()">楽曲生成する</button>
+        <button class="generate_button" type="submit" onclick="click_generate()">楽曲生成する</button>
     </form>
 </div>
 
 {% if message %}
-    <div>
-        {{ message }}
-    </div>
-    <div>
-        <audio src="{{ wav_url }}" controls></audio>
+    <div class="generate_container">
+        <div>
+            {{ message }}
+        </div>
+        <div class="generate_audio">
+            <audio src="{{ wav_url }}" controls></audio>
+        </div>
+        <div>
+            <p>ピアノロール表示</p>
+            <div>
+                <img src="data:image/{{ format }};base64, {{ image }}" alt="Piano Roll">
+            </div>
+        </div>
     </div>
 {% endif %}
 {% endblock %}
