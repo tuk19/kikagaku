@@ -1,4 +1,18 @@
+@use '../../../../home/static/home/scss/common' as common;
+
 .generate_message {
     color: red;
     display: none;
+}
+
+.generate_button {
+    @include common.generate_button;
+}
+
+.generate_container {
+    margin-top: 10px;
+}
+
+.generate_audio {
+    margin: 10px 0
 }
