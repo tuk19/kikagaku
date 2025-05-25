@@ -14,10 +14,10 @@ def index(request):
     context = ""
     if request.method == "POST":
         midi_filename = f"{uuid.uuid4()}.mid"
-        midi_path = os.path.join(settings.MEDIA_ROOT, 'audio', 'generate', midi_filename)
+        midi_path = os.path.join(settings.MEDIA_ROOT, 'audio', 'generate', 'midi', midi_filename)
         wav_filename = midi_filename.replace('.mid', '.wav')
-        wav_path = os.path.join(settings.MEDIA_ROOT, 'audio', 'generate', wav_filename)
-        wav_url = os.path.join(settings.MEDIA_URL, 'audio/generate/', wav_filename)
+        wav_path = os.path.join(settings.MEDIA_ROOT, 'audio', 'generate', 'wav', wav_filename)
+        wav_url = os.path.join(settings.MEDIA_URL, 'audio/generate/wav/', wav_filename)
         model = load_model()
         tokens = generate_tokens(model, max_length=2048)
         decode_tokens_to_midi(tokens, midi_path)
