@@ -14,3 +14,5 @@ dog_100epochs_best.pt
 best_musicmodel_RN18.ckpt
 best_MusicGenerateModel_3.ckpt
 tokenizer_3.json
+
+Gomoku/
