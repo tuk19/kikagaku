@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'DogPose',
     'MusicClassification',
     'MusicGeneration',
+    'MPrediction',
 ]
 
 MIDDLEWARE = [

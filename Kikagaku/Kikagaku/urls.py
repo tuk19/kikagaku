@@ -29,4 +29,5 @@ urlpatterns = [
     path('dogpose/', include('DogPose.urls')),
     path('musicclassification/', include('MusicClassification.urls')),
     path('musicgeneration/', include('MusicGeneration.urls')),
+    path('mprediction/', include('MPrediction.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
