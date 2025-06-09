@@ -1,0 +1,30 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<div>
+    <table class="data_table">
+        <tr>
+            <th>ID</th>
+            <th>選手名</th>
+            <th>チーム名</th>
+            <th>所属年</th>
+            <th>修正</th>
+        </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.player.name }}</td>
+            <td>{{ item.team.name }}</td>
+            <td>{{ year }}</td>
+            <td><a href="{% url 'mprediction:team_edit' item.id %}">修正</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>    
+
+{% include 'mprediction/nav.html' %}
+{% endblock %}
