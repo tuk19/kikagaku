@@ -37,7 +37,16 @@
             </div>
             <div>
                 <h2>Grad-CAM</h2>
-                <img src="data:image/png;base64, {{ gradcam }}" alt="Grad-CAM Heatmap">
+                <div>
+                    <div>
+                        <p>{{ result1 }}</p>
+                        <img src="data:image/png;base64, {{ gradcam1 }}" alt="Grad-CAM Heatmap">
+                    </div>
+                    <div>
+                        <p>{{ result2 }}</p>
+                        <img src="data:image/png;base64, {{ gradcam2 }}" alt="Grad-CAM Heatmap">
+                    </div>
+                </div>
             </div>
         </div>
     {% endif %}

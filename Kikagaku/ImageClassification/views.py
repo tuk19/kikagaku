@@ -29,10 +29,10 @@ def index(request):
             image_for_predict = copy.deepcopy(image_copy)
             
             # 224 x 224 のGrad-CAMを表示
-            result1, result2, gradcam_b64= predict_image_top2_with_gradcam_224(image_for_predict)
+            result1, result2, gradcam1_b64, gradcam2_b64 = predict_image_top2_with_gradcam_224(image_for_predict)
 
             # 元画像サイズと同じサイズのGrad-CAMを表示
-            result1, result2, gradcam_b64= predict_image_top2_with_gradcam(image_for_predict)
+            # result1, result2, gradcam_b64= predict_image_top2_with_gradcam(image_for_predict)
 
             image_for_display.seek(0)
             image.file = image_for_display
@@ -43,7 +43,8 @@ def index(request):
                 'image': image,
                 'result1': result1,
                 'result2': result2,
-                'gradcam': gradcam_b64
+                'gradcam1': gradcam1_b64,
+                'gradcam2': gradcam2_b64
             }
 
             return render(request, 'imageclassification/index.html', context)

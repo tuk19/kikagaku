@@ -121,19 +121,24 @@ def predict_image_top2_with_gradcam_224(image):
 
     # Grad-CAM（上位1位のみ）
     image_tensor.requires_grad = True
-    heatmap = generate_gradcam_224(image_tensor, top2_indices[0][0].item())
 
-    # 元画像をcv2に変換
-    original_image = np.array(image.resize((224, 224)))
-    original_image = cv2.cvtColor(original_image, cv2.COLOR_RGB2BGR)
-    overlay = cv2.addWeighted(original_image, 0.6, heatmap, 0.4, 0)
+    heatmaps_b64 = []
+    for rank in range(2):
+        class_idx = top2_indices[0][rank].item()
+        heatmap = generate_gradcam_224(image_tensor, class_idx)
 
-    # base64に変換
-    _, buffer = cv2.imencode('.png', overlay)
-    heatmap_b64 = base64.b64encode(buffer).decode()
+        # 元画像をcv2に変換
+        original_image = np.array(image.resize((224, 224)))
+        original_image = cv2.cvtColor(original_image, cv2.COLOR_RGB2BGR)
+        overlay = cv2.addWeighted(original_image, 0.6, heatmap, 0.4, 0)
+
+        # base64に変換
+        _, buffer = cv2.imencode('.png', overlay)
+        heatmap_b64 = base64.b64encode(buffer).decode()
+        heatmaps_b64.append(heatmap_b64)
 
     top2_classes = [class_list[i] for i in top2_indices[0]]
-    return top2_classes[0], top2_classes[1], heatmap_b64
+    return top2_classes[0], top2_classes[1], heatmaps_b64[0], heatmaps_b64[1]
 
 def generate_gradcam(image_tensor, class_idx):
     # Grad-CAM用のターゲット層（layer4 の最後）
