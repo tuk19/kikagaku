@@ -35,6 +35,19 @@
                 <p>この画像は <span class="result"> {{ result1 }} </span> だと思いますが</p>
                 <p><span class="result"> {{ result2 }} </span> の可能性もあります</p>
             </div>
+            <div>
+                <h2>Grad-CAM</h2>
+                <div>
+                    <div>
+                        <p>{{ result1 }}</p>
+                        <img src="data:image/png;base64, {{ gradcam1 }}" alt="Grad-CAM Heatmap">
+                    </div>
+                    <div>
+                        <p>{{ result2 }}</p>
+                        <img src="data:image/png;base64, {{ gradcam2 }}" alt="Grad-CAM Heatmap">
+                    </div>
+                </div>
+            </div>
         </div>
     {% endif %}
 </div> 
