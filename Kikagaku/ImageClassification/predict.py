@@ -1,3 +1,5 @@
+import numpy as np
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -5,9 +7,11 @@ import pytorch_lightning as pl
 from torchvision import transforms, models
 from .resnet_model import ResNet18Classifier
 from PIL import Image
+import cv2
 
 from Kikagaku.settings import BASE_DIR
 import os
+import base64
 
 
 
@@ -31,6 +35,10 @@ class_list = [
 
 ckpt_path = os.path.join(BASE_DIR, 'ImageClassification/best_model_RN18.ckpt')
 model = ResNet18Classifier.load_from_checkpoint(ckpt_path)
+
+# Grad-CAM用のフック用変数
+features = None
+gradients = None
 
 def predict_image(image):
     image = Image.open(image).convert('RGB')
@@ -67,3 +75,62 @@ def predict_image_top2(image):
     # print(top2_classes)
 
     return top2_classes[0], top2_classes[1]
+
+
+def save_features_hook(module, input, output):
+    global features
+    features = output.detach()
+
+def save_gradient_hook(module, grad_input, grad_output):
+    global gradients
+    gradients = grad_output[0].detach()
+
+def generate_gradcam(image_tensor, class_idx):
+    # フックの登録（layer4の最後を使うのが一般的）
+    target_layer = model.model.layer4[-1]
+    target_layer.register_forward_hook(save_features_hook)
+    target_layer.register_full_backward_hook(save_gradient_hook)
+
+    model.zero_grad()
+    output = model(image_tensor)
+    class_score = output[0, class_idx]
+    class_score.backward()
+
+    # 平均勾配を計算
+    weights = torch.mean(gradients, dim=(2, 3), keepdim=True)
+    cam = torch.sum(weights * features, dim=1).squeeze().cpu().numpy()
+
+    cam = np.maximum(cam, 0)
+    cam = cv2.resize(cam, (224, 224))
+    cam = cam - np.min(cam)
+    cam = cam / np.max(cam)
+    cam = np.uint8(255 * cam)
+    heatmap = cv2.applyColorMap(cam, cv2.COLORMAP_JET)
+
+    return heatmap
+
+def predict_image_top2_with_gradcam(image):
+    image = Image.open(image).convert('RGB')
+    image_tensor = transform(image).unsqueeze(0)
+    model.eval()
+
+    with torch.no_grad():
+        y = model(image_tensor)
+        probs = F.softmax(y, dim=1)
+        top2_probs, top2_indices = torch.topk(probs, k=2, dim=1)
+
+    # Grad-CAM（上位1位のみ）
+    image_tensor.requires_grad = True
+    heatmap = generate_gradcam(image_tensor, top2_indices[0][0].item())
+
+    # 元画像をcv2に変換
+    original_image = np.array(image.resize((224, 224)))
+    original_image = cv2.cvtColor(original_image, cv2.COLOR_RGB2BGR)
+    overlay = cv2.addWeighted(original_image, 0.6, heatmap, 0.4, 0)
+
+    # base64に変換
+    _, buffer = cv2.imencode('.png', overlay)
+    heatmap_b64 = base64.b64encode(buffer).decode()
+
+    top2_classes = [class_list[i] for i in top2_indices[0]]
+    return top2_classes[0], top2_classes[1], heatmap_b64

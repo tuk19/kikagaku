@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from .forms import ImageUploadform
-from .predict import predict_image_top2
+from .predict import predict_image_top2_with_gradcam
 from io import BytesIO
 import copy
 
@@ -28,7 +28,7 @@ def index(request):
             image_for_display = copy.deepcopy(image_copy)
             image_for_predict = copy.deepcopy(image_copy)
             
-            result1, result2 = predict_image_top2(image_for_predict)
+            result1, result2, gradcam_b64= predict_image_top2_with_gradcam(image_for_predict)
 
             image_for_display.seek(0)
             image.file = image_for_display
@@ -38,7 +38,8 @@ def index(request):
                 'image_type': image_type,
                 'image': image,
                 'result1': result1,
-                'result2': result2
+                'result2': result2,
+                'gradcam': gradcam_b64
             }
 
             return render(request, 'imageclassification/index.html', context)
