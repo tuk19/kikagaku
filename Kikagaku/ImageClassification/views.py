@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from .forms import ImageUploadform
-from .predict import predict_image_top2_with_gradcam
+from .predict import predict_image_top2_with_gradcam_224, predict_image_top2_with_gradcam
 from io import BytesIO
 import copy
 
@@ -28,6 +28,10 @@ def index(request):
             image_for_display = copy.deepcopy(image_copy)
             image_for_predict = copy.deepcopy(image_copy)
             
+            # 224 x 224 のGrad-CAMを表示
+            result1, result2, gradcam_b64= predict_image_top2_with_gradcam_224(image_for_predict)
+
+            # 元画像サイズと同じサイズのGrad-CAMを表示
             result1, result2, gradcam_b64= predict_image_top2_with_gradcam(image_for_predict)
 
             image_for_display.seek(0)
