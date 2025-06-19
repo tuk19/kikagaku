@@ -3,12 +3,16 @@ from django.db import models
 class Team(models.Model):
     name = models.CharField(max_length=100)
     team_no = models.IntegerField(unique=True)
+    def __str__(self):
+        return self.name
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
     team = models.ForeignKey(Team, on_delete=models.PROTECT)
     player_no = models.IntegerField(unique=True)
     birth = models.DateField(null=True, blank=True)
+    def __str__(self):
+        return self.name
 
 
 class Membership(models.Model):
