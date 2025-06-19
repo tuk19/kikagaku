@@ -19,7 +19,7 @@
             <td>{{ item.id }}</td>
             <td>{{ item.player.name }}</td>
             <td>{{ item.team.name }}</td>
-            <td>{{ year }}</td>
+            <td>{{ item.year }}</td>
             <td><a href="{% url 'mprediction:team_edit' item.id %}">修正</a></td>
         </tr>
         {% endfor %}
@@ -27,4 +27,5 @@
 </div>    
 
 {% include 'mprediction/nav.html' %}
+<li><a href="{% url 'mprediction:member_create' %}">選手情報追加</a></li>
 {% endblock %}
